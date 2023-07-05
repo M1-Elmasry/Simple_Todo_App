@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+
+.tasks-container {
+
+  margin-left: 29.5%;
+  margin-top: 13%;
+}
+
+.add-bar {
+
+  margin-left: 32%;
+  margin-top: 13%;
+}
+
+.add-btn {
+  width: 16%;
+}
+

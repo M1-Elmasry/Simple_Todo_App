@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,600,0,0"/>
+  </head>
+  <body class="relative {{body_color}} h-screen w-screen">
+    <img src="{{ url_for('static', filename=bg_img) }}" alt="background-img" class="h-2/5 w-full">
+    <!-- init todo tasks container -->
+    <div class="tasks-container absolute top-0 left-0 w-2/5 h-2/4 p-3 pt-4 border-lg {{container_color}} rounded-sm shadow-2xl overflow-scroll">
+      <input type="text" id="todo_input" placeholder="Enter Something You Want Todo" class="{{input_text_color}} {{input_bg_color}} w-10/12 h-14 p-2 rounded-sm float-left">
+      <button type="submit" id="add_btn" class="flex bg-sky-500 hover:bg-sky-600 add-btn h-14 items-center justify-center text-white" onclick="addTodo()">Add</button>
+      <br><hr><br>
+      {% for todo in todo_list %}
+      <div class="text-black flex w-full h-16 rounded-sm p-4 {{todo_text_color}} {{todo_bg_color}} items-center">
+        <div class="flex w-full justify-between items-center">
+          <div class="flex items-center">            
+            <span class="text-lg">{{todo.periority}}</span>
+            &nbsp;&nbsp;
+            <span class="text-xl">|</span>
+            &nbsp;&nbsp;
+            <h3>{{todo.todo}}</h3>
+          </div>
+          <div>
+            <button type="submit" class=""><span class="material-symbols-outlined text-green-500 hover:bg-gray-300 border-sm">check</span></button>
+            &nbsp;&nbsp;
+            <button type="submit" class=""><span class="material-symbols-outlined text-red-500 hover:bg-gray-300 border-sm">delete</span></button>
+          </div>
+        </div>
+      </div>
+      <br>
+      {% endfor %}
+    </div>
+    <script>
+      function addTodo(){
+        var todo = document.getElementById("todo_input")
+        if (todo.value != ""){
+          fetch("/add", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({"todo":todo.value})
+          })
+          .then(response => response.text())
+          .then(date => {console.log(date);})
+        }
+      }
+    </script>
+
+  </body>
+</html>
